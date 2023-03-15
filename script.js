@@ -35,7 +35,7 @@ document.getElementById('temp').innerHTML = (obj.main.temp - 273.15).toFixed(1);
 
     document.getElementById('icon').src = "http://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
 
-    if (request.status >= 200 && request.status < 400) {
+    if (request.status == 200) {
       var temp = obj.main.temp;
     }
     else {
