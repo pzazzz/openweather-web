@@ -1,80 +1,93 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>CodePen - A Pen by Navaneeth K M</title>
-  <link rel="stylesheet" href="./cstyle.css">
-  <link rel="icon" type="image/png" href="http://openweathermap.org/img/wn/02d@2x.png">
+<html lang="en">
 
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<head>
-  <title>Weather App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>CodePen - A Pen by Navaneeth K M</title>
+        <link rel="stylesheet" href="./cstyle.css">
+        <link rel="icon" type="image/png" href="http://openweathermap.org/img/wn/02d@2x.png">
 
-<body>
-      <nav>
-      <div class="navbar-container">
-        <div class="logo-container">
-          <img src="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png" alt="Logo" />
-        </div>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="#">Custom</a></li>
-        </ul>
-      </div>
-    </nav>
-  <div class="container">
-    <div class="card">
-      <h2><i class="fa fa-map-marker"></i> <span id="location"></span></h2>
-      <h5 id="weather"></h5>
-      <h4><span id="temp"></span><sup>o</sup>C</h4>
-      <img id="icon" src="">
-      <div class="input-container">
-        <form> <input type="text" id="city" placeholder="Enter a city name..." onkeyup="getWeather()"></form>
-      </div>
-    </div>
-  </div>
-</body>
+    </head>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script>
-  function getWeather() {
-  var city = document.getElementById("city").value;
-  var link =
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
-    city +
-    "&appid=bf8d15a80c89aa4f4c82ad6cbb3f5ac5";
+    <body>
 
-  fetch(link)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+        <head>
+            <title>Weather App</title>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+            <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="style.css">
+        </head>
 
-      if (data.cod === "404") {
-        document.getElementById("location").innerHTML = "";
-        document.getElementById("weather").innerHTML = "";
-        document.getElementById("temp").innerHTML = "";
-        document.getElementById("icon").src = "";
-        console.log("The city doesn't exist! Kindly check");
-      } else {
-        document.getElementById("location").innerHTML = data.name;
-        document.getElementById("weather").innerHTML =
-          data.weather[0].description;
-        document.getElementById("temp").innerHTML = (
-          data.main.temp - 273.15
-        ).toFixed(1);
-        document.getElementById("icon").src =
-          "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-      }
-    })
-    .catch((error) => console.error(error));
+        <body>
+            <nav>
+                <div class="navbar-container">
+                    <div class="logo-container">
+                        <img src="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png" alt="Logo" />
+                    </div>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Custom</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="card">
+                    <h2><i class="fa fa-map-marker"></i> <span id="location"></span></h2>
+                    <h5 id="weather"></h5>
+                    <h4><span id="temp"></span><sup>o</sup>C</h4>
+                    <img id="icon" src="">
+                    <div class="input-container">
+                        <form onsubmit="event.preventDefault();"><input type="text" id="city" placeholder="Enter a city name..." onkeydown="if (event.keyCode === 13) { getWeather(); }"></form>
+                    </div>
+                </div>
+            </div>
+        </body>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script>
+function getWeather() {
+    var city = document.getElementById("city")
+        .value;
+    var link =
+        "https://api.openweathermap.org/data/2.5/weather?q=" +
+        city +
+        "&appid=bf8d15a80c89aa4f4c82ad6cbb3f5ac5";
+    
+    fetch(link)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            
+            if (data.cod === "404") {
+                document.getElementById("location")
+                    .innerHTML = "";
+                document.getElementById("weather")
+                    .innerHTML = "";
+                document.getElementById("temp")
+                    .innerHTML = "";
+                document.getElementById("icon")
+                    .src = "";
+                console.log("The city doesn't exist! Kindly check");
+            } else {
+                document.getElementById("location")
+                    .innerHTML = data.name;
+                document.getElementById("weather")
+                    .innerHTML =
+                    data.weather[0].description;
+                document.getElementById("temp")
+                    .innerHTML = (
+                        data.main.temp - 273.15
+                    )
+                    .toFixed(1);
+                document.getElementById("icon")
+                    .src =
+                    "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+            }
+        })
+        .catch((error) => console.error(error));
 }
-</script>
+        </script>
 
-</body>
+    </body>
+
 </html>
